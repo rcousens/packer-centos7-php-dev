@@ -1,0 +1,5 @@
+*.iso
+*.box
+.vagrant
+vagrant/logs/*
+output-virtualbox-iso/

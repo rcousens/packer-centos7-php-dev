@@ -1,0 +1,28 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "centos7"
+  config.vm.box_url = "./centos7.0.box"
+  
+  config.vm.network "forwarded_port", guest: 80, host: 9980, auto_correct: true
+  config.vm.network "forwarded_port", guest: 3306, host: 9906, auto_correct: true
+
+  config.vm.synced_folder "../salt/roots/salt", "/srv/salt"
+  config.vm.synced_folder "../salt/roots/pillar", "/srv/pillar"
+  config.vm.synced_folder "logs", "/var/log/vagrant"
+  config.vm.synced_folder "app", "/var/www/app"
+
+  config.vm.provider "virtualbox" do |v|
+  	v.gui = true
+  end
+  
+  config.vm.provision :salt do |salt|
+    salt.minion_config = "../salt/minion"
+    salt.colorize = true
+    salt.verbose = true
+    salt.log_level = "info"
+    salt.run_highstate = true
+    salt.always_install = true
+  end
+end
