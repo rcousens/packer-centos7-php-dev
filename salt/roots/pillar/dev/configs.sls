@@ -5,7 +5,7 @@ php:
   timezone: 'Australia/Brisbane'
 
 mariadb:
-  root_password: 'f4j0asdf'
+  root_password: 'dbuser'
   user_password: 'dbuser'
 
 pre:
