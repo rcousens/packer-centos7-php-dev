@@ -14,14 +14,14 @@ nginx:
     - require:
       - sls: log
 
-/var/www/app:
+/var/www/project:
   file:
     - directory
     - user: vagrant
     - group: vagrant
     - makedirs: true
 
-/var/www/app/web:
+/var/www/project/web:
   file:
     - directory
     - user: vagrant
