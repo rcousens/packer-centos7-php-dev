@@ -9,7 +9,7 @@ nginx:
     - restart: true
     - watch:
       - file: /etc/nginx/nginx.conf
-      - file: /etc/nginx/conf.d/app.conf
+      - file: /etc/nginx/conf.d/project.conf
       - pkg: nginx
     - require:
       - sls: log
@@ -27,6 +27,8 @@ nginx:
     - user: vagrant
     - group: vagrant
     - makedirs: true
+    - require:
+      - file: /var/www/project
 
 nginx-conf:
   file.managed:
@@ -34,13 +36,13 @@ nginx-conf:
     - source: salt://_files/nginx/conf/nginx.conf
     - template: jinja
     - require:
-      - file: /var/www/app
+      - file: /var/www/project/web
       - pkg: nginx
 
 nginx-vhost-dev:
   file.managed:
-    - name: /etc/nginx/conf.d/app.conf
-    - source: salt://_files/nginx/vhosts/app.conf
+    - name: /etc/nginx/conf.d/project.conf
+    - source: salt://_files/nginx/vhosts/project.conf
     - template: jinja
     - require:
       - file: nginx-conf
