@@ -11,6 +11,11 @@ restart-{{ service }}-{{ order }}:
 {% set pre_services = salt['pillar.get']('pre:restart', []) %}
 {% set post_services = salt['pillar.get']('post:restart', []) %}
 
+upgrade-packages:
+  module.run:
+    - name: pkg.upgrade
+    - order: 1
+
 sudoers:
   file.managed:
     - name: /etc/sudoers
@@ -25,10 +30,12 @@ vagrant:
     - template: jinja
     - order: last
 
-upgrade-packages:
-  module.run:
-    - name: pkg.upgrade
-    - order: 1
+apache:
+  user.present:
+    - groups:
+      - apache
+      - vagrant
+    - order: last
 
 {{ service_restart(pre_services, '2') }}
 {{ service_restart(post_services, 'last') }}

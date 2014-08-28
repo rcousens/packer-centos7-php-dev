@@ -9,7 +9,7 @@ mariadb:
   user_password: 'dbuser'
 
 pre:
-  restart: ['nginx', 'php-fpm', 'mariadb']
+  restart: []
 
 post:
   restart: ['nginx', 'php-fpm', 'mariadb']
