@@ -48,41 +48,19 @@ vagrant:
     - template: jinja
     - order: last
 
-apache-user:
+{% for service-user in ['apache','mysql','nginx','redis'] %}
+{{ service-user }}-user:
   user.present:
-    - name: apache
+    - name: {{ service-user }}
     - groups:
-      - apache
-      - vagrant
-    - require:
-      - sls: php
-
-nginx-user:
-  user.present:
-    - name: nginx
-    - groups:
-      - nginx
-      - vagrant
-    - require:
-      - sls: nginx
-
-mysql-user:
-  user.present:
-    - name: mysql
-    - groups:
-      - mysql
+      - {{ service-user }}
       - vagrant
     - require:
       - sls: mariadb
-
-redis-user:
-  user.present:
-    - name: redis
-    - groups:
-      - redis
-      - vagrant
-    - require:
+      - sls: nginx      
+      - sls: php
       - sls: redis
+{% endfor %}
 
 {{ service_restart(pre_services, '2') }}
 {{ service_restart(post_services, 'last') }}
