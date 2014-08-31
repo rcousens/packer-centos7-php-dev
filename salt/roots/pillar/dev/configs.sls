@@ -12,4 +12,4 @@ pre:
   restart: []
 
 post:
-  restart: ['nginx', 'php-fpm', 'mariadb']
+  restart: ['nginx', 'php-fpm', 'mariadb', 'redis']
