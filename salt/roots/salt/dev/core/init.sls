@@ -48,12 +48,12 @@ vagrant:
     - template: jinja
     - order: last
 
-{% for service-user in ['apache','mysql','nginx','redis'] %}
-{{ service-user }}-user:
+{% for service_user in ['apache','mysql','nginx','redis'] %}
+{{ service_user }}-user:
   user.present:
-    - name: {{ service-user }}
+    - name: {{ service_user }}
     - groups:
-      - {{ service-user }}
+      - {{ service_user }}
       - vagrant
     - require:
       - sls: mariadb
