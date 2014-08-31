@@ -1,6 +1,3 @@
-include:
-  - log
-
 nginx:
   pkg.latest:
     - refresh: true
@@ -11,8 +8,6 @@ nginx:
       - file: /etc/nginx/nginx.conf
       - file: /etc/nginx/conf.d/project.conf
       - pkg: nginx
-    - require:
-      - sls: log
 
 /var/www/project:
   file:
